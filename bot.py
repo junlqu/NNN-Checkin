@@ -22,7 +22,7 @@ async def on_ready():
     print(f'{client.user} is ready!\n')
     await client.wait_until_ready()
     channel = client.get_channel(int(os.getenv("CHANNEL"))) # Channel from ID
-    channel.send(f"NNN Bot is up and active!\n\nDon't forget to check in daily!")
+    await channel.send(f"NNN Bot is up and active!\n\nDon't forget to check in daily!")
 
 @client.event
 async def on_message(message):
