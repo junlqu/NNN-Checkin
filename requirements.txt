@@ -1,2 +1,2 @@
-discor.py
+discord.py
 firebase_admin
