@@ -1,2 +1,5 @@
 discord.py
 firebase_admin
+dotenv
+time
+os
