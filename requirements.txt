@@ -1,5 +1,4 @@
 discord.py
 firebase_admin
-python-dotenv==0.21.0
 time
 os
