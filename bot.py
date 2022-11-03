@@ -13,6 +13,7 @@ load_dotenv()
 intents = discord.Intents(messages = True, message_content = True, members = True, guilds = True, guild_messages = True)
 client = discord.Client(intents=intents)
 
+guild_id = int(os.getenv("GUILD"))
 date = time.localtime()
 
 @client.event
@@ -61,18 +62,20 @@ async def on_message(message):
 async def check_date():
     date = time.localtime()
     await client.wait_until_ready()
-    channel = client.get_channel(1037197294606483536) # Channel from ID
+    channel = client.get_channel(int(os.getenv("CHANNEL"))) # Channel from ID
 
     if (date.tm_mon == 12) and (date.tm_hour == 0) and (date.tm_min == 0) and (date.tm_sec < 12):
         users = in_chal()
+        await add_roles_to_user(users, int(os.getenv("ROLE1")))
         await channel.send(f"Congratulations! Now that NNN is officially over, these ***GIGACHADS*** are your victors:\n\n{print_users_mention(users)}")
 
+    #else: # Used for testing
     elif (date.tm_hour == 0) and (date.tm_min == 0) and (date.tm_sec < 12):
         failed = users_failed()
         if len(failed) == 0:
             await channel.send("Congratulations! All remaining contestants passed!")
         else:
-
+            await add_roles_to_user(failed, int(os.getenv("ROLE2")))
             await channel.send(f"Uh Oh! Somebody couldn't hold the urges...\n\nThe following contestants failed:\n\n{print_users_mention(failed)}")
 
 def print_users(users):
@@ -87,8 +90,10 @@ def print_users_mention(users):
         conc += f"<@{str(user)}>\n"
     return conc
 
-def add_roles(ids, role):
+async def add_roles_to_user(ids, role):
+    guild = client.get_guild(guild_id)
+    r = guild.get_role(role)
     for id in ids:
-        client.get_user(int(id)).add_role(role)
+        await guild.get_member(int(id)).add_roles(r)
 
 client.run(os.getenv('TOKEN'))
