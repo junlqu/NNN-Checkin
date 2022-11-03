@@ -62,11 +62,17 @@ async def check_date():
     date = time.localtime()
     await client.wait_until_ready()
     channel = client.get_channel(1037197294606483536) # Channel from ID
-    if (date.tm_hour == 0) and (date.tm_min == 0) and (date.tm_sec < 12):
+
+    if (date.tm_mon == 12) and (date.tm_hour == 0) and (date.tm_min == 0) and (date.tm_sec < 12):
+        users = in_chal()
+        await channel.send(f"Congratulations! Now that NNN is officially over, these ***GIGACHADS*** are your victors:\n\n{print_users_mention(users)}")
+
+    elif (date.tm_hour == 0) and (date.tm_min == 0) and (date.tm_sec < 12):
         failed = users_failed()
         if len(failed) == 0:
             await channel.send("Congratulations! All remaining contestants passed!")
         else:
+
             await channel.send(f"Uh Oh! Somebody couldn't hold the urges...\n\nThe following contestants failed:\n\n{print_users_mention(failed)}")
 
 def print_users(users):
