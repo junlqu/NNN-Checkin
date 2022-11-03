@@ -1,5 +1,5 @@
 discord.py
 firebase_admin
-dotenv
+python-dotenv
 time
 os
