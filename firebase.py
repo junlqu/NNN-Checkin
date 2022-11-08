@@ -106,3 +106,18 @@ def in_chal():
         if vals[time.localtime().tm_mday - 1] == True:
             cont.append(user)
     return cont
+
+# Return a list of users that are in the challenge that have not checked in today
+def not_checked():
+    cont = []
+    ref = db.reference(f'/')
+    users = user_ids(ref.get())
+    for (user, vals) in users.items():
+        if vals[time.localtime().tm_mday] == False and vals[time.localtime().tm_mday - 1] == True:
+            cont.append(user)
+    return cont
+
+# Returns the seconds before december ends
+def countdown():
+    t = time.localtime()
+    return (30 - t.tm_mday) * 86400 + (23 - t.tm_hour) * 3600 + (59 - t.tm_min) * 60 + (59 - t.tm_sec)

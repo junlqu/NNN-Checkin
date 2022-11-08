@@ -57,9 +57,19 @@ async def on_message(message):
             await message.channel.send('**No one has failed!**')
         else:
             await message.channel.send(f'**__Failures:__**\n\n{print_users(users)}')
+
+    elif message.content.lower() == 'nnn reminder':
+        users = not_checked()
+        if len(users) == 0:
+            await message.channel.send('**All remaining contestants checked in today!**')
+        else:
+            await message.channel.send(f'**__Remind these wankers:__**\n\n{print_users(users)}')
+
+    elif message.content.lower() == 'nnn countdown':
+        await message.channel.send(f'**__Time until NNN ends:__**  {countdown()}')
     
     elif message.content.lower() == "nnn help":
-        await message.channel.send('**__Commands:__**\n\n`present`  to check in daily\n\n`NNN remaining`  to check the remaining contestants\n\n`NNN failed`  to check the contestants that already failed')
+        await message.channel.send('**__Commands:__**\n\n`present`  to check in daily\n\n`NNN remaining`  to check the remaining contestants\n\n`NNN failed`  to check the contestants that already failed\n\n`NNN reminder`  to check the contestants that have not checked in today\n\n`NNN countdown`  to check the countdown until december')
 
 @tasks.loop(seconds=12)
 async def check_date():
